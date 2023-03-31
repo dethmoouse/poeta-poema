@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 05-oct-2019 19:24:35 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Poema" table="poema" catalog="poemas" optimistic-lock="version">
+        <id name="idPoema" type="java.lang.Integer">
+            <column name="idPoema" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="poeta" class="model.Poeta" fetch="select">
+            <column name="poeta_idPoeta" />
+        </many-to-one>
+        <property name="titulo" type="string">
+            <column name="titulo" length="45" />
+        </property>
+        <property name="tipo" type="string">
+            <column name="tipo" length="45" />
+        </property>
+        <property name="fecha" type="date">
+            <column name="fecha" length="10" />
+        </property>
+        <property name="nacionalidad" type="string">
+            <column name="nacionalidad" length="45" />
+        </property>
+    </class>
+</hibernate-mapping>

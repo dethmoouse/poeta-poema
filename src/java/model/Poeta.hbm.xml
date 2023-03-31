@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 05-oct-2019 19:24:35 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Poeta" table="poeta" catalog="poemas" optimistic-lock="version">
+        <id name="idPoeta" type="java.lang.Integer">
+            <column name="idPoeta" />
+            <generator class="identity" />
+        </id>
+        <property name="nombre" type="string">
+            <column name="nombre" length="45" />
+        </property>
+        <property name="paterno" type="string">
+            <column name="paterno" length="45" />
+        </property>
+        <property name="materno" type="string">
+            <column name="materno" length="45" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="45" />
+        </property>
+        <property name="pseudonimo" type="string">
+            <column name="pseudonimo" length="45" />
+        </property>
+        <property name="sexo" type="string">
+            <column name="sexo" length="15" />
+        </property>
+        <property name="nacionalidad" type="string">
+            <column name="nacionalidad" length="45" />
+        </property>
+        <set name="poemas" table="poema" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="poeta_idPoeta" />
+            </key>
+            <one-to-many class="model.Poema" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+      
+    <h:head>
+        <title>POETAS</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    
+    <h:body style="background-color:#c0d566;">
+        <p:panelGrid columns="2">
+        <p:layoutUnit position="west" resizable="true" style="min-height:10px;min-width:200px">
+        <h:link outcome="index" value=" Menu Principal" /><br/>    
+        </p:layoutUnit>    
+        </p:panelGrid>
+        <center>
+            
+                       
+            <h:form id="formInsertar"  >
+                <p:panelGrid columns ="2"  >
+                    
+                 <p:outputLabel value ="Nombre:"/>
+                 <p:inputText value="#{poetaBean.poeta.nombre}"/>  
+                 <p:outputLabel value ="Paterno:"/>
+                 <p:inputText value="#{poetaBean.poeta.paterno}"/>  
+                 <p:outputLabel value ="Materno:"/>
+                 <p:inputText value="#{poetaBean.poeta.materno}"/>  
+                 <p:outputLabel value ="Email:"/>
+                 <p:inputText value="#{poetaBean.poeta.email}"/>  
+                 <p:outputLabel value ="Pseudonimo:"/>
+                 <p:inputText value="#{poetaBean.poeta.pseudonimo}"/>  
+                 <p:outputLabel value ="Sexo:"/>
+                 <p:inputText value="#{poetaBean.poeta.sexo}"/>  
+                 <p:outputLabel value ="Nacionalidad:"/>
+                 <p:inputText value="#{poetaBean.poeta.nacionalidad}"/>  
+                 
+                </p:panelGrid>
+                <p:commandButton value="Insertar" action= "#{poetaBean.insertar()}" update=":formMostrar" />
+                <h:link outcome="Poetas" value="Actualizar Pagina"/>
+                
+                    
+             </h:form >
+        </center>
+        
+        <h:form id="formMostrar">
+            <p:dataTable var="per" 
+                         value="#{poetaBean.poetas}" 
+                         emptyMessage="No hay registros"
+                         paginator="true" 
+                         rows="8"
+                         paginatorPosition="top"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
+                         {PreviousPageLink} {PageLinks}
+                         {NextPageLink} {RowsPerPageDropdown} "
+                         rowsPerPageTemplate="5" >
+                
+                <p:column headerText="Id Poeta"  > 
+                     <h:outputText value="#{per.idPoeta}" />
+                </p:column>
+                 <p:column headerText="Nombre" > 
+                     <h:outputText value="#{per.nombre}" />
+                </p:column>
+                 <p:column headerText="Paterno" > 
+                     <h:outputText value="#{per.paterno}" />
+                </p:column>
+                 <p:column headerText="Materno" > 
+                     <h:outputText value="#{per.materno}" />
+                </p:column>
+                 <p:column headerText="Email" > 
+                     <h:outputText value="#{per.email}" />
+                </p:column>
+                 <p:column headerText="Pseudonimo" > 
+                     <h:outputText value="#{per.pseudonimo}" />
+                </p:column>
+                 <p:column headerText="Sexo" > 
+                     <h:outputText value="#{per.sexo}" />
+                </p:column>
+                 <p:column headerText="Nacionalidad" > 
+                     <h:outputText value="#{per.nacionalidad}" />
+                </p:column>
+                  
+                
+       
+                
+                
+                <p:column headerText="Accion">
+                    <p:commandButton value="Editar"
+                                     onclick="PF('dlgmodificar').show();"
+                                     update=":formModificar" >
+                                         
+                        <f:setPropertyActionListener
+                            target="#{poetaBean.poeta}"
+                            value="#{per}"/>
+                    </p:commandButton>
+                    <p:commandButton value="Eliminar"
+                                     onclick="PF('dlgeliminar').show()"
+                                     update=":formEliminar :formMostrar">
+                        <f:setPropertyActionListener
+                            target="#{poetaBean.poeta}"
+                            value="#{per}"/>
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+        </h:form >
+                
+        <p:dialog id="dlg" header="Modificar"
+                  showEffect="explode" hideEffect="bounce"
+                  widgetVar="dlgmodificar" modal="true"
+                  resizable="false" minWidth="200"
+                >
+                  
+            <h:form id="formModificar">
+                <p:panelGrid columns="2">
+                  
+                 
+      <p:outputLabel value ="Id Poeta:"/>
+                 <p:inputText value="#{poetaBean.poeta.idPoeta}"/>  
+                 <p:outputLabel value ="Nombre:"/>
+                 <p:inputText value="#{poetaBean.poeta.nombre}"/>  
+                 <p:outputLabel value ="Paterno:"/>
+                 <p:inputText value="#{poetaBean.poeta.paterno}"/>  
+                 <p:outputLabel value ="Materno:"/>
+                 <p:inputText value="#{poetaBean.poeta.materno}"/>  
+                 <p:outputLabel value ="Email:"/>
+                 <p:inputText value="#{poetaBean.poeta.email}"/>  
+                 <p:outputLabel value ="Pseudonimo:"/>
+                 <p:inputText value="#{poetaBean.poeta.pseudonimo}"/>  
+                 <p:outputLabel value ="Sexo:"/>
+                 <p:inputText value="#{poetaBean.poeta.sexo}"/>  
+                 <p:outputLabel value ="Nacionalidad:"/>
+                 <p:inputText value="#{poetaBean.poeta.nacionalidad}"/>  
+                    
+                    
+                </p:panelGrid>
+                <p:commandButton  actionListener= "#{poetaBean.modificar()}"
+                                  value="Modificar"
+                                  update=":formMostrar"
+                                  onclick="PF('dlgmodificar').hide();"
+                                   />
+            </h:form>          
+        </p:dialog>
+        <p:dialog id="dlg2" header="Eliminar Poeta" showEffect="explote"
+                  widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">
+            <h:form id="formEliminar">
+                <p:outputLabel value="Eliminar Poeta"/>
+                <p:commandButton value="SI" actionListener="#{poetaBean.eliminar()}" update=":formEliminar :formMostrar" 
+                                      onclick="PF{'dlgeliminar'}.hide();"/>
+                <p:commandButton value="NO" onclick="PF{'dlg2').hide;"/>
+            </h:form>
+        </p:dialog>
+    </h:body>
+</html>

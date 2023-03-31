@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+      
+    <h:head>
+        <title>POEMAS</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body style="background-color:#ee201a;">
+        <p:panelGrid columns="2">
+        <p:layoutUnit position="west" resizable="true" style="min-height:10px;min-width:200px">
+        <h:link outcome="index" value=" Menu Principal" /><br/>    
+        </p:layoutUnit>    
+        </p:panelGrid>
+        <center>
+            <h:form id="formInsertarPoemas"  >
+                <p:panelGrid  columns ="2"  >
+             
+                 <p:outputLabel value ="ID Poema:"  />
+                 <p:inputText value="#{poemaBean.poema.idPoema}"/>
+                 <p:outputLabel value ="Poeta :"  />
+                 <p:selectOneMenu value="#{poemaBean.poeta_idPoeta}">
+                        <f:selectItems value="#{poetaBean.poetas}" var="mario" 
+                                       itemLabel="#{mario.idPoeta} #{mario.nombre}" itemValue="#{mario.idPoeta}"/>
+                    </p:selectOneMenu>
+                     <p:outputLabel value ="Titulo:"  />
+                     <p:inputText value="#{poemaBean.poema.titulo}"/>  
+                     <p:outputLabel value ="Tipo:"  />
+                     <p:inputText value="#{poemaBean.poema.tipo}"/>  
+                     <p:outputLabel value ="Fecha:"  />
+                     <p:calendar value="#{poemaBean.poema.fecha}"/> 
+                     <p:outputLabel value ="Nacionalidad:"  />
+                     <p:inputText value="#{poemaBean.poema.nacionalidad}"/>  
+                 
+                </p:panelGrid>
+                <p:commandButton value="Insertar" action= "#{poemaBean.insertar()}" update=":formMostrarPoemas"/>
+             <p:commandButton value="Eliminar" action= "#{poemaBean.eliminar()}" update=":formMostrarPoemas" />
+             </h:form > 
+        </center>
+        
+        
+        <h:form id="formMostrarPoemas">
+            <p:dataTable var="per" 
+                         value="#{poemaBean.poemas}" 
+                         emptyMessage="No hay registros"
+                         paginator="true" 
+                         rows="8"
+                         paginatorPosition="top"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
+                         {PreviousPageLink} {PageLinks}
+                         {NextPageLink} {RowsPerPageDropdown} "
+                         rowsPerPageTemplate="5"
+            >
+                
+                <p:column headerText="Id Poema"  > 
+                    <h:outputText value="#{per.idPoema}" />
+                </p:column>
+                 <p:column headerText="Id Poeta" > 
+                     <h:outputText value="#{per.poeta.idPoeta}" />
+                </p:column>
+                 <p:column headerText="Titulo" > 
+                     <h:outputText value="#{per.titulo}" />
+                </p:column>
+                 <p:column headerText="Tipo" > 
+                     <h:outputText value="#{per.tipo}" />
+                </p:column>
+                 <p:column headerText="Fecha" > 
+                     <h:outputText value="#{per.fecha}" />
+                </p:column>
+                 <p:column headerText="Nacionalidad" > 
+                     <h:outputText value="#{per.nacionalidad}" />
+                </p:column>
+                
+                
+       
+                
+                
+                <p:column headerText="Accion">
+                    <p:commandButton value="Editar"
+                                     onclick="PF('dlgmodificar').show();"
+                                     update=":formModificarPoemas" 
+                                    >
+                                         
+                        <f:setPropertyActionListener
+                            target="#{poemaBean.poema}"
+                            value="#{per}"/>
+                    </p:commandButton>
+                </p:column>
+                
+                 
+                
+                
+                
+                  
+            </p:dataTable>
+        </h:form >
+        
+        
+        
+        
+       
+        
+        
+        
+        
+        <p:dialog id="dlg" header="Modificar"
+                  showEffect="explode" hideEffect="bounce"
+                  widgetVar="dlgmodificar" modal="true"
+                  resizable="false" minWidth="200"
+                >
+                  
+            <h:form id="formModificarPoemas">
+                <p:panelGrid columns="2">
+                 
+      <p:outputLabel value ="Id Poema:"  />
+                 <p:inputText value="#{poemaBean.poema.idPoema}"/>  
+                   <p:outputLabel value ="Id Poeta:"  />
+                   <p:inputText value="#{poemaBean.poeta_idPoeta}"/>  
+                     <p:outputLabel value ="Titulo:"  />
+                     <p:inputText value="#{poemaBean.poema.titulo}"/>  
+                     <p:outputLabel value ="Tipo:"  />
+                     <p:inputText value="#{poemaBean.poema.tipo}"/>  
+                     <p:outputLabel value ="Fecha:"  />
+                     <p:calendar value="#{poemaBean.poema.fecha}"/>  
+                     <p:outputLabel value ="Nacionalidad:"  />
+                     <p:inputText value="#{poemaBean.poema.nacionalidad}"/>  
+                    
+                    
+                </p:panelGrid>
+                <p:commandButton  actionListener= "#{poemaBean.modificar()}"
+                                  value="Modificar"
+                                  update=":formMostrarPoemas"
+                                  onclick="PF('dlgmodificar').hide();" />
+            </h:form>          
+        </p:dialog>
+    </h:body>
+</html>
